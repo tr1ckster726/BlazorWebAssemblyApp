@@ -1,0 +1,11 @@
+{
+    "workbench.colorTheme": "Default Dark Modern",
+    "workbench.preferredDarkColorTheme": "Default Dark+",
+    "workbench.preferredHighContrastColorTheme": "Visual Studio 2019 Dark",
+    "workbench.preferredHighContrastLightColorTheme": "Visual Studio 2019 Dark",
+    "workbench.preferredLightColorTheme": "Visual Studio 2019 Dark",
+    "workbench.iconTheme": "vscode-icons",
+    "editor.tokenColorCustomizations": {
+        "keywords": "#c586c0"
+    }
+}
