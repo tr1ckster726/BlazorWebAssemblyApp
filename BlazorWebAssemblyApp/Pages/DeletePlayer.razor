@@ -24,10 +24,10 @@
 </div>
 
 @code {
-    // Essentially we are passing the entire game into the Modal
+    // Essentially we are passing the entire Player object into the Modal
     // as a parameter.
     [Parameter]
-    public Game? Game { get; set; }
+    public Player? Player { get; set; }
 
     // We are invoking this callback Parameter here so that the other component, Index.razor
     // is able to do something about it
@@ -38,13 +38,13 @@
 
     protected override void OnParametersSet()
     {
-        title = $"Delete {Game?.Name}?";
+        title = $"Delete {Player?.Name}?";
     }
 
     private void Confirm()
     {
         // This triggers a signal back to the user to indeed confirm that we are deleting
-        // a game
+        // a player
         OnClose.InvokeAsync(true);
     }
 

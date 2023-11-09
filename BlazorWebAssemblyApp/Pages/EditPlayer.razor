@@ -1,0 +1,106 @@
+﻿@page "/player"
+@page "/player/{id:int}"
+@using Models
+@inject NavigationManager NavigationManager
+
+<PageTitle>@title</PageTitle>
+<h1>ATP Players</h1>
+<h3>@title</h3>
+
+@if (player is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <EditForm Model="@player" OnValidSubmit="HandleSubmit">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <InputText id="name" @bind-Value="player.Name" class="form-control"></InputText>
+                <ValidationMessage For=@(() => player.Name) />
+            </div>
+            <div class="mb-3">
+                <label for="nationality" class="form-label">Nationality:</label>
+                <InputSelect id="nationality" @bind-Value="player.Nationality" class="form-select">
+                    <option value="">Select nationality</option>
+                    <option value="Spain">Spain</option>
+                    <option value="Switzerland">Switzerland</option>
+                    <option value="USA">USA</option>
+                    <option value="Serbia">Serbia</option>
+                    <option value="Germany">Germany</option>
+                </InputSelect>
+                <ValidationMessage For=@(() => player.Nationality) />
+            </div>
+            <div class="mb-3">
+                <label for="majors" class="form-label">Majors:</label>
+                <InputNumber id="majors" @bind-Value="player.Majors" class="form-control"></InputNumber>
+                <ValidationMessage For=@(() => player.Majors) />
+            </div>
+            <div class="mb-3">
+                <label for="birthday" class="form-label">Birthday:</label>
+                <InputDate id="birthday" @bind-Value="player.Birthday" class="form-control"></InputDate>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+        </EditForm>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    private Player? player;
+
+    private string title = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        if (Id is not null)
+        {
+            Player foundplayer = PlayerClient.GetPlayer(Id.Value);
+            player = new Player()
+            {
+                Id = foundplayer.Id,
+                Name = foundplayer.Name,
+                Nationality = foundplayer.Nationality,
+                Majors = foundplayer.Majors,
+                Birthday = foundplayer.Birthday
+            };
+
+            title = $"Edit {player.Name}";
+        }
+        else
+        {
+            player = new()
+                {
+                    Name = string.Empty,
+                    Nationality = string.Empty,
+                    Birthday = DateTime.UtcNow
+                };
+
+            title = "New Player";
+        }
+    }
+
+    private void HandleSubmit()
+    {
+        if (player!.Id == 0)
+        {
+            PlayerClient.AddPlayer(player);
+        }
+        else
+        {
+            PlayerClient.UpdatePlayer(player);
+        }
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
