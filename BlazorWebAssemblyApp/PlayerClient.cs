@@ -16,7 +16,7 @@ public static class PlayerClient
             IsSelected = false,
             Statistics = new PlayerStatistics()
             {
-                Height = "6ft 2",
+                Height = "6ft 1",
                 Weight = 180.00,
                 TotalWins = 1251,
                 TotalLosses = 275
@@ -48,7 +48,7 @@ public static class PlayerClient
             IsSelected = false,
             Statistics = new PlayerStatistics()
             {
-                Height = "6ft 1",
+                Height = "6ft 2",
                 Weight = 175.00,
                 TotalWins = 1082,
                 TotalLosses = 211
